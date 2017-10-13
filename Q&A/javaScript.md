@@ -15,3 +15,12 @@ e.target:真正触发事件的元素
 e.currentTarget 事件绑定的元素
 
 ie低版本的浏览器是用attachEvent，而高版本ie和标准浏览器用的是addEventListener
+
+#### 实现bind函数
+```
+Function.prototype.bind2 = function (target,...params) {
+        return () => {
+            this.apply(target,params)
+        }
+    }
+```
