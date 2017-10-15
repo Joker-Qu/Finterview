@@ -24,3 +24,18 @@ Function.prototype.bind2 = function (target,...params) {
         }
     }
 ```
+#### 类型转换
+使用 == 进行比较时，可能会发生类型转换，先调用valueof方法，如果返回的不是原始类型，再调用toString方法
+#### 判断数组
+- Array.isArray(arr)
+- Object.prototype.toString.call(arg) === '[object Array]'
+#### 跨域
+同源策略：协议、域名、端口相同我们认为是同源的，不同源时，会禁止ajax请求、dom操作和locolStorage、cookie等存储的获取。字体、img、script标签等不受影响。
+
+跨域策略：
+1. 代理转发
+2. jsonp
+3. cors
+4. hash
+5. webscoket
+具体参考云笔记
