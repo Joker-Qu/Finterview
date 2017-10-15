@@ -94,4 +94,9 @@ c_iframe.src = c_iframe.src + "#" + b_width + "|" + b_height;  // 这里通过ha
 
 块级元素水平居中设置margin：0 auto即可
 
-  
+#### :和::的区别
+单冒号(:)用于CSS3伪类，双冒号(::)用于CSS3伪元素
+新的在CSS3中引入的伪元素则不允许再支持旧的单冒号的写法。旧的css2中的before、after等伪元素仍然支持：写法。
+#### nth-child和nth-type区别
+p:nth-child(2)表示这个元素要是p标签，且是第二个子元素
+p:nth-of-type(2)表示父标签下的第二个p元素
