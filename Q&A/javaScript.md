@@ -39,3 +39,47 @@ Function.prototype.bind2 = function (target,...params) {
 4. hash
 5. webscoket
 具体参考云笔记
+#### let块级作用域如何实现
+其实就是进入{}后改变变量名
+转换前：
+```
+let a1 = 1;
+let a2 = 6;
+
+{
+    let a1 = 2;
+    let a2 = 5;
+
+    {
+        let a1 = 4;
+        let a2 = 5;
+    }
+}
+a1 = 3;
+转换后：
+
+var a1 = 1;
+var a2 = 6;
+
+{
+    var _a = 2;
+    var _a2 = 5;
+
+    {
+        var _a3 = 4;
+        var _a4 = 5;
+    }
+}
+a1 = 3;
+```
+#### react diff算法
+![参考](https://zhuanlan.zhihu.com/p/20346379)
+普通树的diff算法复杂度是n的三次方，react通过大胆的假设将其变为n
+具体来说有三个层次的diff算法
+1. tree diff 树进行分层比较，两棵树只会对同一层次的节点进行比较。当发现节点已经不存在，则该节点及其子节点会被完全删除掉，不会用于进一步的比较。
+2. component diff 不同组件直接替换不比较
+3. element diff 对同一层级的同组子节点，添加唯一 key 进行区分
+
+
+
+
