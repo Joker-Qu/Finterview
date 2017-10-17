@@ -80,6 +80,46 @@ a1 = 3;
 2. component diff 不同组件直接替换不比较
 3. element diff 对同一层级的同组子节点，添加唯一 key 进行区分
 
-
-
-
+#### 统计给定数组中，各数出现的次数，返回 json 对象
+```
+function countNumber(arr) {
+        var count = {}
+        for(let item of arr){
+            let key = `${item}`
+            if (!count[key]){
+                count[key] = 1
+            }else {
+                count[key]++
+            }
+        }
+        return JSON.stringify(count)
+    }
+```
+#### 字符串去重
+```
+function filter(str) {
+        var arr = str.split('')
+        var arr2 = []
+        var count = {}
+        for(let s of arr){
+            var key = `${s}`
+            if (!count[key]){
+                count[key]=1
+                arr2.push(s)
+            }
+        }
+        return arr2.join('')
+    }
+```
+#### Promise对象，嵌套try catch，内层嵌套错误捕获,怎样实现依次异步回调
+#### js数据类型
+六种原始数据类型:
+- Boolean.  布尔值，true 和 false.
+- null. 一个表明 null 值的特殊关键字。 JavaScript 是大小写敏感的，因此 null 与 Null、NULL或其他变量完全不同。
+- undefined.  变量未定义时的属性。
+- Number.  表示数字，例如： 42 或者 3.14159。
+- String.  表示字符串，例如："Howdy"
+- Symbol ( 在 ECMAScript 6 中新添加的类型).。一种数据类型，它的实例是唯一且不可改变的。
+以及对象
+#### 内存泄露 
+ 
