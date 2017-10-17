@@ -122,4 +122,30 @@ function filter(str) {
 - Symbol ( 在 ECMAScript 6 中新添加的类型).。一种数据类型，它的实例是唯一且不可改变的。
 以及对象
 #### 内存泄露 
- 
+不再用到的内存，没有及时释放，就叫做内存泄漏
+JavaScript 在定义变量时就完成了内存分配
+![参考](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Memory_Management)
+垃圾回收算法
+- 引用记数 如果没有引用指向该对象（零引用），对象将被垃圾回收机制回收。但是该方法无法处理循环引用
+- 标记清除 这个算法把“对象是否不再需要”简化定义为“对象是否可以获得”。JavaScript 中有个全局对象，浏览器中是 window。定期的，垃圾回收期将从这个全局对象开始，找所有从这个全局对象开始引用的对象，再找这些对象引用的对象...对这些活着的对象进行标记，这是标记阶段。清除阶段就是清除那些没有被标记的对象。
+
+哪些情况会造成内存泄漏？
+未清除的定时器、无意识的全局变量。
+闭包：闭包并不会引起内存泄漏，只是由于IE9之前的版本对JScript对象和dom对象使用不同的垃圾收集，从而导致内存无法进行回收，这是IE的问题，所以闭包和内存泄漏没半毛钱关系。在低版本IE中虽然JavaScript对象通过标记清除的方式进行垃圾回收，但BOM与DOM对象却是通过引用计数回收垃圾的。
+#### deepClone
+```
+function deepClone2(target) {
+        if (typeof target === Object){
+            var o = {}
+            if (Object.prototype.toString.call(o) === '[object Array]'){
+                o = []
+            }
+            for(let k in target){
+                o[k] = deepClone(target[k])
+            }
+            return o
+        }else {
+            return target
+        }
+    }
+```
