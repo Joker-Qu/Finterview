@@ -149,3 +149,19 @@ function deepClone2(target) {
         }
     }
 ```
+#### 数组扁平化
+```
+//1
+var result = []
+    function filter(arr) {
+        for(let item of arr){
+            if (Array.isArray(item)){
+                filter(item)
+            }else {
+                result.push(item)
+            }
+        }
+
+    }
+    filter([0,1,2,[3,4],5])
+```
