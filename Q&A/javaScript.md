@@ -165,3 +165,92 @@ var result = []
     }
     filter([0,1,2,[3,4],5])
 ```
+#### 写一个对象来满足A == '1'，然后问==和===的区别
+对象和原始数据类型比较时，会先调用valueof方法，类型不同再调用toString方法
+```
+var A = {
+        valueOf: function () {
+            return 1
+        }
+    }
+    console.log(A == '1')
+```
+#### 手写jsonp
+```
+
+    (function () {
+        var foramtParams = function (data) {
+            var arr = []
+            for(var k in data){
+                arr.push(encodeURIComponent(k)+'='+encodeURIComponent(data[k]))
+            }
+            return arr.join('&')
+        }
+        var jsonp = function (options) {
+            options = options || {}
+            if (!options.url || !options.callback) {
+                throw new Error('参数不合法')
+            }
+            var callbackName = ('jsonp_'+Math.random()).replace(".","")
+            var head = document.getElementsByTagName('head')[0]
+            var params = ""
+            if (options.data){
+                options.data[options.callback] = callbackName
+                params += foramtParams(options.data)
+            }else {
+                params += options.callback+'='+callbackName
+            }
+            var script = document.createElement('script')
+            head.appendChild(script)
+            window[callbackName] = function (json) {
+                head.removeChild(script)
+                clearTimeout(script.timer)
+                window[callbackName] = null
+                options.success && options.success(json)
+            }
+            script.src = options.url + '?' + params
+            if (options.time){
+                script.timer = setTimeout(function () {
+                    window[callbackName] = null
+                    head.removeChild(script)
+                    options.fail && options.fail({message:"time out"})
+                })
+            }
+        }
+        window.jsonp = jsonp
+    })()
+    jsonp({
+        url:"http://wwww.baidu.com",
+        callback:'callback',
+        data:{id:'1'},
+        success:function (res) {
+            console.log(res)
+        },
+        fail:function (err) {
+            console.log(err)
+        },
+        time:10000
+    })
+    
+```
+#### 给出一个(010)111111，然后写代码来将这个模式的字符串转换为010-111111模式
+```
+function changestr(str) {
+        return str.substring(1).split(')').join('-')
+    }
+    console.log(changestr('(010)111111'))
+```
+#### JavaScript的异步
+![参考](https://segmentfault.com/a/1190000004322358)
+异步：对io操作不用等待执行结果的调用方式
+js是单线程，是指运行环境中负责解释和执行js代码的线程只有一个，可以叫他主线程。
+但是还有处理ajax，dom事件等的其它线程，称为工作线程。
+
+异步过程：主线程发起一个异步请求，相应的工作线程接收请求并告知主线程已收到(异步函数返回)；主线程可以继续执行后面的代码，同时工作线程执行异步任务；工作线程完成工作后，通知主线程；主线程收到通知后，执行一定的动作(调用回调函数)。
+
+异步过程中，工作线程在异步操作完成后需要通知主线程。那么这个通知机制是怎样实现的呢？答案是利用消息队列和事件循环。
+工作线程将消息放到消息队列，主线程通过事件循环过程去取消息。主线程只会做一件事情，就是从消息队列里面取消息、执行消息，再取消息、再执行。当消息队列为空时，就会等待直到消息队列变成非空。而且主线程只有在将当前的消息执行完成后，才会去取下一个消息。这种机制就叫做事件循环机制，取一个消息并执行的过程叫做一次循环。
+消息就是对注册异步任务时添加的回调函数进行了包装。
+异步过程中，工作线程在异步操作完成后需要通知主线程。那么这个通知机制是怎样实现的呢？答案是利用消息队列和事件循环。
+
+
