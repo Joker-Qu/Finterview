@@ -253,4 +253,40 @@ js是单线程，是指运行环境中负责解释和执行js代码的线程只�
 消息就是对注册异步任务时添加的回调函数进行了包装。
 异步过程中，工作线程在异步操作完成后需要通知主线程。那么这个通知机制是怎样实现的呢？答案是利用消息队列和事件循环。
 
-
+#### promise封装ajax
+```
+function ajax(url,options) {
+    return new Promise((resolve,reject) => {
+        try {
+            var data = options.data
+            var type = options.type.toLowerCase();
+            var params = []
+            for (var k in options.params) {
+                params.push(`${k}=${options.params[k]}`)
+            }
+            var req = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject()
+            if (type === 'get'){
+                req.open(`${url}?${params.join('&')}`)
+                req.send()
+            }else {
+                req.open(url)
+                req.setRequestHeader('Content-type','application/x-www-form-urlencoded')
+                req.send(params.join('&'))
+            }
+            req.onload = () => {
+                if (req.status === 200 || req.status === 304){
+                    resolve(req.responseText)
+                }else {
+                    reject(req.error)
+                }
+            }
+        }catch (e){
+            reject(e)
+        }
+    })
+}
+```
+#### 手写一个NodeJS的fs.readFile方法的Promise封装
+#### 如何使用ES6的generator函数来进行异步的调用
+#### 箭头函数的特点
+不绑定自己的this，arguments，不能用作构造函数
