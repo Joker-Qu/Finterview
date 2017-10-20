@@ -66,3 +66,10 @@ Content-Security-Policy、输入输出过滤转义两种。Content-Security-Poli
 4. “可相互组合”—— 组件正在强大的地方，组件间组装整合
 5. “接口规范化”—— 组件接口有统一规范，或者是生命周期的管理
 #### node异步非阻塞 I/O 底层实现原理
+#### webpack刷新原理
+构建 bundle 的时候，加入一段 HMR runtime 的 js 和一段和服务沟通的 js 。文件修改会触发 webpack 重新构建，服务器通过向浏览器发送更新消息，浏览器通过 jsonp 拉取更新的模块文件，jsonp 回调触发模块热替换逻辑。
+
+具体过程：构建过程中会分析文件的md5，将修改的模块记录在一个json文件中。webpack-dev-server 会响应客户端发起的 EventStream 请求，然后保持请求不断开。这样服务器就可以在有更新的时候直接把结果 push 到浏览器。
+![](https://zos.alipayobjects.com/rmsportal/MrLNdSjTeZJdtvczOalS.svg)
+
+
