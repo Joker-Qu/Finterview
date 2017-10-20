@@ -43,3 +43,22 @@ dns劫持就是通过劫持了DNS服务器，修改域名的解析结果，导�
 - Expires	指定一个日期/时间，超过该时间则认为此回应已经过期	Expires: Thu, 01 Dec 1994 16:00:00 GMT	固定: 标准
 - Last-Modified	所请求的对象的最后修改日期(按照 RFC 7231 中定义的“超文本传输协议日期”格式来表示)	Last-Modified: Dec, 26 Dec 2015 17:30:00 GMT	固定
 #### HTTPS的原理
+
+#### 端口号
+用来确实数据传输到哪个应用程序
+
+#### cookies，session,sessionStroage和localStorage的区别
+Session是在服务端保存的一个数据结构，用来跟踪用户的状态，这个数据可以保存在集群、数据库、文件中；
+Cookie是客户端保存用户信息的一种机制，用来记录用户的一些信息，也是实现Session的一种方式。将session id写在cookie里。
+sessionStroage和localStorage是h5推出的存储方式，sessionStroage会话关闭会删除，localStorage不会。
+#### 服务端推送
+1. ajax轮询
+2. comet 服务器收到一个连接如果没有数据更新就阻塞这个连接不要返回给客户端，直到有新数据再返回给客户端。
+3. websocket WebSocket 架构在客户端与服务器之间打开一个套接字，用于实现全双工（双向）通信。
+4. SSE 是一种更简单的标准，是作为 HTML5 的扩展而开发的。尽管 SSE 支持从服务器向客户端发送异步消息，但客户端无法向服务器发送消息。
+
+
+#### url长度限制
+http协议对url长度没有限制，进行限制的是服务端框架和浏览器。
+#### ajax传递二进制数据
+XMLHttpRequest对象的send方法已被增强,可以通过简单的传入一个ArrayBuffer, Blob, 或者 File对象来发送二进制数据.
