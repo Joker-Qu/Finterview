@@ -290,3 +290,6 @@ function ajax(url,options) {
 #### 如何使用ES6的generator函数来进行异步的调用
 #### 箭头函数的特点
 不绑定自己的this，arguments，不能用作构造函数
+#### macro task micro task
+JS 引擎会将所有任务按照类别分到这两个队列中，首先在 macrotask 的队列（这个队列也被叫做 task queue）中取出第一个任务，执行完毕后取出 microtask 队列中的所有任务顺序执行；之后再取 macrotask 任务，周而复始，直至两个队列的任务都取完。
+全部代码(script)是一个macrotask,js先执行一个macrotask,执行过程中遇到(setTimeout, setInterval, setImmediate等)异步操作则创建一个macrotask,遇到(process.nextTick, Promises等)创建一个microtask,这两个queue分别被挂起.执行栈为空时开始处理macrotask,完成后处理microtask,直到该microtask全部执行完,然后继续主线程调用栈.
