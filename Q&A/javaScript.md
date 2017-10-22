@@ -293,3 +293,60 @@ function ajax(url,options) {
 #### macro task micro task
 JS 引擎会将所有任务按照类别分到这两个队列中，首先在 macrotask 的队列（这个队列也被叫做 task queue）中取出第一个任务，执行完毕后取出 microtask 队列中的所有任务顺序执行；之后再取 macrotask 任务，周而复始，直至两个队列的任务都取完。
 全部代码(script)是一个macrotask,js先执行一个macrotask,执行过程中遇到(setTimeout, setInterval, setImmediate等)异步操作则创建一个macrotask,遇到(process.nextTick, Promises等)创建一个microtask,这两个queue分别被挂起.执行栈为空时开始处理macrotask,完成后处理microtask,直到该microtask全部执行完,然后继续主线程调用栈.
+
+#### 排序，找出最大三个数
+建堆，使用堆排序
+堆的定义：堆是一颗完全二叉树。根节点的值大于左右子树，每一个子树也是堆，这样叫做大顶堆。
+堆的调整：从最后一个非叶子节点开始，每次比较父节点，左孩子，右孩子的值，将最大的和父节点交换。
+堆排序的时间复杂度为nlgn
+
+#### 快速排序
+```
+// nlgn
+function quicksort(arr) {
+        if (arr.length <=1){
+            return arr
+        }
+        var temp = arr[0]
+        var left = []
+        var right = []
+        for(var i=1;i<arr.length;i++){
+            if (arr[i]<temp){
+                left.push(arr[i])
+            }else {
+                right.push(arr[i])
+            }
+        }
+        return quicksort(left).concat([temp],quicksort(right))
+    }
+    console.log(quicksort([2,3,4,2,3,7,2,6,15]))
+```
+
+#### 继承的实现方式,详细问了创建实例对象的内部过程.
+```
+function People(name) {
+        this.name = name
+    }
+    function Student(school) {
+        People.call(this)
+        this.school = school
+    }
+    Student.prototype.constructor = Student
+    Student.prototype = Object.create(People.prototype)
+```
+#### 虚拟dom的原理和实现
+在React中，render执行的结果得到的并不是真正的DOM节点，结果仅仅是轻量级的JavaScript对象，我们称之为virtual DOM。
+虚拟dom性能优势归功于batching和diff算法
+![参考](https://github.com/livoras/blog/issues/13)
+虚拟dom的实现：
+1. 用js对象表示dom。var VElement = function(tagName, props, children）
+2. 比较两棵虚拟DOM树的差异.在深度优先遍历的时候，每遍历到一个节点就把该节点和新的的树进行对比。如果有差异的话就记录到一个对象里面。
+但是要注意的是，因为tagName是可重复的，不能用这个来进行对比。所以需要给子节点加上唯一标识key，列表对比的时候，使用key进行对比，这样才能复用老的 DOM 树上的节点。
+3. 对真实DOM进行最小化修改
+
+#### es6模块的实现
+![参考](https://ryerh.com/javascript/2016/03/27/babel-module-implementation.html)
+用 Babel 把 ES6 的模块机制转换成 CommonJS 的形式.Babel 依然通过 exports 对象来输出模块内的引用，但是增加了一个特殊的 exports.default 属性用来实现 ES6 的默认输出对象。并且依然通过 require 来实现模块的加载。
+
+#### 闭包
+内部函数引用外部函数变量形成闭包。当我们需要在模块中定义一些变量，并希望这些变量一直保存在内存中但又不会“污染”全局的变量时，就可以用闭包来定义这个模块。

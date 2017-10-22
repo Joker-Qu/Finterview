@@ -72,4 +72,9 @@ Content-Security-Policy、输入输出过滤转义两种。Content-Security-Poli
 具体过程：构建过程中会分析文件的md5，将修改的模块记录在一个json文件中。webpack-dev-server 会响应客户端发起的 EventStream 请求，然后保持请求不断开。这样服务器就可以在有更新的时候直接把结果 push 到浏览器。
 ![](https://zos.alipayobjects.com/rmsportal/MrLNdSjTeZJdtvczOalS.svg)
 
+#### 前端路由的原理
+hash History
 
+#### script标签的defer、async的区别
+defer是在HTML解析完之后才会执行，如果是多个，按照加载的顺序依次执行
+async是在加载完成后立即执行，如果是多个，执行顺序和加载顺序无关

@@ -100,3 +100,8 @@ c_iframe.src = c_iframe.src + "#" + b_width + "|" + b_height;  // 这里通过ha
 #### nth-child和nth-type区别
 p:nth-child(2)表示这个元素要是p标签，且是第二个子元素
 p:nth-of-type(2)表示父标签下的第二个p元素
+
+#### Flex
+#### querySelector和getElementById通过id获取元素的区别
+querySelectorAll 返回的是一个 Static Node List，而 getElementsBy 系列的返回的是一个 Live Node List。
+querySelector的参数不能以数字开头。
